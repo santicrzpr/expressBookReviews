@@ -25,18 +25,40 @@ public_users.get('/',function (req, res) {
 });
 
 // Get book details based on ISBN
-public_users.get('/isbn/:isbn',function (req, res) {
+public_users.get('/isbn/:isbn', function (req, res) {
   //Write your code here
-w
-
-  
-  return res.status(300).json({message: "Yet to be implemented"});
- });
+  const isbn = parseInt(req.params.isbn); // Convert ISBN to integer
+  if (books.hasOwnProperty(isbn)) {
+    const book = books[isbn];
+    return res.status(200).json({ book });
+  } else {
+    return res.status(404).json({ message: "Book not found" });
+  }
+//    return res.status(300).json({message: "Yet to be implemented"});
+});
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  const providedAuthor = req.params.author; // Get the provided author from request parameters
+  const matchingBooks = []; // Array to store matching books
+
+  // Iterate through each key in the books object
+  Object.keys(books).forEach(key => {
+    const book = books[key]; // Get the book object for the current key
+    // Check if the author of the current book matches the provided author
+    if (book.author === providedAuthor) {
+      matchingBooks.push(book); // Add the matching book to the array
+    }
+  });
+
+  // Check if any matching books were found
+  if (matchingBooks.length > 0) {
+    return res.status(200).json({ books: matchingBooks });
+  } else {
+    return res.status(404).json({ message: "No books found for the provided author" });
+  }
+//  return res.status(300).json({message: "Yet to be implemented"});
 });
 
 // Get all books based on title

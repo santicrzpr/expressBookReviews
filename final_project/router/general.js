@@ -44,15 +44,12 @@ public_users.get('/author/:author',function (req, res) {
   const matchingBooks = []; // Array to store matching books
 
   // Iterate through each key in the books object
-  Object.keys(books).forEach(key => {
-    const book = books[key]; // Get the book object for the current key
-    // Check if the author of the current book matches the provided author
+  for (const key in books) {
+    const book = books[key]; 
     if (book.author === providedAuthor) {
-      matchingBooks.push(book); // Add the matching book to the array
+      matchingBooks.push(book); 
     }
-  });
-
-  // Check if any matching books were found
+  }
   if (matchingBooks.length > 0) {
     return res.status(200).json({ books: matchingBooks });
   } else {
@@ -64,9 +61,23 @@ public_users.get('/author/:author',function (req, res) {
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
-});
+  const providedTitle = req.params.title; // Get the provided author from request parameters
+  const matchingBooks = []; // Array to store matching books
 
+  // Iterate through each key in the books object
+  for (const key in books) {
+    const book = books[key]; 
+    if (book.title === providedTitle) {
+      matchingBooks.push(book); 
+    }
+  }
+  if (matchingBooks.length > 0) {
+    return res.status(200).json({ books: matchingBooks });
+  } else {
+    return res.status(404).json({ message: "No books found for the provided author" });
+  }
+//  return res.status(300).json({message: "Yet to be implemented"});
+});
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
   //Write your code here

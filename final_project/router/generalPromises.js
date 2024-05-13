@@ -36,6 +36,16 @@ public_users.get('/',function (req, res) {
       reject(error);
     }
   });
+  getBooks
+    .then((booksData) => {
+      // Stringify the books object and send it as JSON response
+      const booksJSON = JSON.stringify(booksData);
+      res.status(200).json(booksJSON);
+    })
+    .catch((error) => {
+      console.error("Error parsing file:", error);
+      res.status(500).json({ error: "Internal Error" });
+    });
 });
 
 // Get book details based on ISBN

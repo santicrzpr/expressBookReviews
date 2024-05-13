@@ -28,7 +28,6 @@ public_users.get('/',function (req, res) {
   const getBooks = new Promise((resolve, reject) => {
     try {
       // Simulate asynchronous reading of books data
-      resolve(books);
       // Replace this with actual asynchronous operation to read books data
       setTimeout(() => {
         resolve(books);

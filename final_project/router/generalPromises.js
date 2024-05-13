@@ -25,15 +25,18 @@ public_users.post("/register", (req,res) => {
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
   //Write your code here
+  const getBooks = new Promise((resolve, reject) => {
     try {
-    // Stringify the books object and send it as JSON response
-    const booksJSON = JSON.stringify(books);
-    return res.status(200).json(booksJSON);
-  } catch (error) {
-    console.error("Error parsing file:", error);
-    return res.status(500).json({ error: "Internal Error" });
-  }
-//  return res.status(300).json({message: "Yet to be implemented"});
+      // Simulate asynchronous reading of books data
+      resolve(books);
+      // Replace this with actual asynchronous operation to read books data
+      setTimeout(() => {
+        resolve(books);
+      }, 2000); // Simulating a delay of 1 second
+    } catch (error) {
+      reject(error);
+    }
+  });
 });
 
 // Get book details based on ISBN

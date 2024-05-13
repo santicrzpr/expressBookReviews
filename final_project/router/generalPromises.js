@@ -52,12 +52,29 @@ public_users.get('/',function (req, res) {
 public_users.get('/isbn/:isbn', function (req, res) {
   //Write your code here
   const isbn = parseInt(req.params.isbn); // Convert ISBN to integer
-  if (books.hasOwnProperty(isbn)) {
-    const book = books[isbn];
-    return res.status(200).json({ book });
-  } else {
-    return res.status(404).json({ message: "Book not found" });
-  }
+  const getBooks = new Promise((resolve, reject) => {
+    try {
+      // Simulate asynchronous reading of books data
+      // Replace this with actual asynchronous operation to read books data
+      setTimeout(() => {
+        resolve(books);
+      }, 2000); // Simulating a delay of 1 second
+    } catch (error) {
+      reject(error);
+    }
+  });
+  getBooks.then((booksData) => {
+    if (booksData.hasOwnProperty(isbn)) {
+      const book = booksData[isbn];
+      return res.status(200).json({ book });
+    } else {
+      return res.status(404).json({ message: "Book not found" });
+    }
+  })
+  .catch((error) => {
+    console.error("Error parsing file:", error);
+    res.status(500).json({ error: "Internal Error" });
+  });
 //    return res.status(300).json({message: "Yet to be implemented"});
 });
   

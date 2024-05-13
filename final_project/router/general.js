@@ -103,10 +103,4 @@ public_users.get('/review/:isbn',function (req, res) {
 //  return res.status(300).json({message: "Yet to be implemented"});
 });
 
-regd_users.delete("/auth/review/:isbn", (req, res) => {
-
-
-});
-
-
 module.exports.general = public_users;

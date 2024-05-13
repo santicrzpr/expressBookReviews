@@ -75,6 +75,24 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 //  return res.status(300).json({message: "Yet to be implemented"});
 });
 
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+  const isbn = req.params.isbn; 
+  const book = books[isbn];
+  const userName = req.session.authorization.username;
+  const reviewTxt = req.body.reviewText;
+  if (books.hasOwnProperty(isbn)){
+    if (book.reviews.hasOwnProperty(userName)) {
+      delete book.reviews[userName];
+      res.status(200).send("Review deleted successfully.");
+    } else {
+      // If the user doesn't have a review for the book, send a 404 error response
+      res.status(404).json({ error: "Your user hasn't reviewed this book." });
+    }
+  } else {
+        res.status(404).json({ error: "Book does not exist." });
+  }
+});
+
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
 module.exports.users = users;
